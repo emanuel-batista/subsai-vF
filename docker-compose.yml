@@ -1,0 +1,16 @@
+services:
+  subsai:
+    build: .
+    volumes:
+      - ./:/app  # Mapeia a sua pasta atual para dentro do contentor
+    working_dir: /app # Define a pasta de trabalho onde o script vai rodar
+    # Configuração robusta para GPU (necessária para o modelo 'turbo')
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
